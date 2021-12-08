@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../config/ehcache.xsd" updateCheck="false">
+	<diskStore path="java.io.tmpdir/hibernate/electric-charge" />
+	
+	<!-- 设置缓存文件 .data 的创建路径。
+
+	         如果该路径是 Java 系统参数，当前虚拟机会重新赋值。
+	
+	         下面的参数这样解释：
+	         user.home – 用户主目录
+	         user.dir      – 用户当前工作目录
+	         java.io.tmpdir – 默认临时文件路径 
+          -->
+	
+	<!-- DefaultCache setting. -->
+	<defaultCache 
+		maxEntriesLocalHeap="10000" 
+		eternal="false"
+		timeToIdleSeconds="300" 
+		timeToLiveSeconds="600" 
+		overflowToDisk="true"
+		maxEntriesLocalDisk="100000" 
+		memoryStoreEvictionPolicy="LFU"/>
+		
+	<cache name="QueryCcache"	
+        maxElementsInMemory="10000"
+		eternal="false"		
+		timeToIdleSeconds="10"
+		timeToLiveSeconds="60"
+		overflowToDisk="true"
+		memoryStoreEvictionPolicy="LRU" ></cache>
+		
+	<!-- security entity-->		
+	<cache 
+		name="SecurityEntity"
+		maxEntriesLocalHeap="1000" 
+		eternal="true" 
+		overflowToDisk="true"
+		maxEntriesLocalDisk="10000" />
+		
+	<!-- server entity-->		
+	<cache 
+		name="ServerEntity"
+		maxEntriesLocalHeap="1000" 
+		eternal="true" 
+		overflowToDisk="true"
+		maxEntriesLocalDisk="10000" />
+		
+</ehcache>
+
+	<!-- 缺省缓存配置。CacheManager 会把这些配置应用到程序中。
+
+		下列属性是 defaultCache 必须的：
+		
+			maxElementsInMemory -内存能够被缓存的最大元素数量（必须设置）。
+	        
+	        eternal				- 元素是否永恒。如果是永恒的，就永远不会过期（必须设置）。
+	        
+	        timeToIdleSeconds	- 导致元素过期的访问间隔（以秒为单位）。设置为0表示元素可以永远空闲。（默认值是0。）
+	                                              
+	        timeToLiveSeconds	- 元素在缓存里可以存在的时间（以秒为单位）。设置为0表示元素可以在缓存里永远存在而不过期。（默认值是0。）
+	        
+	        overflowToDisk		- 当内存缓存达到maxElementsInMemory时，是否可以溢出到磁盘。（必须设置。）
+		
+			diskExpiryThreadIntervalSeconds - 磁盘过期线程运行的频率（以秒为单位），也就是磁盘存留的缓存清理过期项目的频率（默认是120秒）。
+			
+			memoryStoreEvictionPolicy - 当达到maxElementsInMemory时，如何强制进行驱逐。默认使用“最近使用（LRU）”策略，还可以使用“先入先出（FIFO）”和“较少使用（LFU）”策略。（默认是LRU。）
+		-->
